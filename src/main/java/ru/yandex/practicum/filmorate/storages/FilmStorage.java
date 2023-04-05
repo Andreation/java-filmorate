@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.storages;
 
 import ru.yandex.practicum.filmorate.exceptions.IdException;
-import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.*;
