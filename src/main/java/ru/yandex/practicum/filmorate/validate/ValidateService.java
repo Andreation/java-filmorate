@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Component
 public class ValidateService {
+
     public void validateFilmDate(Film film) throws FilmDateException {
         if (film.getReleaseDate().isBefore(LocalDate.of(1895,2, 27))) {
             throw new FilmDateException("Ошибка даты");
