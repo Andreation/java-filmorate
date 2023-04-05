@@ -22,6 +22,7 @@ public class UserStorage {
             throw new IdException("Не верно введен id");
         }
     }
+
     public void update(User user) throws IdException {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
