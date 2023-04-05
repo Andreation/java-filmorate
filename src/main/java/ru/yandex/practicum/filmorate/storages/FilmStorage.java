@@ -19,7 +19,7 @@ public class FilmStorage {
         }
     }
 
-    public void update(Film film) throws IdException{
+    public void update(Film film) throws IdException {
         if (films.containsKey(film.getId())){
             films.put(film.getId(), film);
         } else {
@@ -31,4 +31,5 @@ public class FilmStorage {
         System.out.println(films.toString());
         return new ArrayList<>(films.values());
     }
+
 }

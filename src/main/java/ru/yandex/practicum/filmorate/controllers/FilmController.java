@@ -28,7 +28,7 @@ public class FilmController {
     }
 
     @PutMapping()
-    public Film put(@RequestBody @Valid Film film) throws IdException{
+    public Film put(@RequestBody @Valid Film film) throws IdException {
         filmStorage.update(film);
         return film;
     }

@@ -19,13 +19,16 @@ public class UserController {
         userStorage.save(user);
         return user;
     }
+
     @PutMapping()
-    public User put(@RequestBody @Valid User user) throws IdException{
+    public User put(@RequestBody @Valid User user) throws IdException {
         userStorage.update(user);
         return user;
     }
+
     @GetMapping()
     public ArrayList<User> getFilms() {
         return userStorage.getUsers();
     }
+
 }
