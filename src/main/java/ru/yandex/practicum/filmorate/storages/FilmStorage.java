@@ -9,6 +9,7 @@ import java.util.*;
 public class FilmStorage {
     Map<Integer, Film> films = new LinkedHashMap<>();
     protected Integer id = 0;
+
     public void save(Film film) throws IdException {
         if (!films.containsKey(film.getId())) {
             film.setId(++id);
@@ -17,6 +18,7 @@ public class FilmStorage {
             throw new IdException("Не верно введен id");
         }
     }
+
     public void update(Film film) throws IdException{
         if (films.containsKey(film.getId())){
             films.put(film.getId(), film);
@@ -24,6 +26,7 @@ public class FilmStorage {
             throw new IdException("Не верно введен id");
         }
     }
+
     public ArrayList<Film> getFilms() {
         System.out.println(films.toString());
         return new ArrayList<>(films.values());
