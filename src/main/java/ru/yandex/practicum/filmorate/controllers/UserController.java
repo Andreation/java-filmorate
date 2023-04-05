@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @RequestMapping("users")
 public class UserController {
     protected UserStorage userStorage = new UserStorage();
+
     @PostMapping()
     public User post(@RequestBody @Valid User user) throws IdException {
         userStorage.save(user);
