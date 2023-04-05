@@ -26,7 +26,7 @@ public class UserStorage {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-            if (users.containsKey(user.getId())){
+            if (users.containsKey(user.getId())) {
                 users.put(user.getId(), user);
             } else {
                 throw new IdException("Не верно введен id");

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.*;
-@Slf4j
+
 public class FilmStorage {
     Map<Integer, Film> films = new LinkedHashMap<>();
     protected Integer id = 0;
@@ -20,7 +20,7 @@ public class FilmStorage {
     }
 
     public void update(Film film) throws IdException {
-        if (films.containsKey(film.getId())){
+        if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
         } else {
             throw new IdException("Не верно введен id");
