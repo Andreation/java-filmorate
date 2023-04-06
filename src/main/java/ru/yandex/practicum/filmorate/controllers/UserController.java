@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.model.User;
@@ -10,10 +11,11 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 
 @Slf4j
+@Component
 @RestController
 @RequestMapping("users")
 public class UserController {
-    protected UserStorage userStorage = new UserStorage();
+    private final UserStorage userStorage = new UserStorage();
 
     @PostMapping()
     public User post(@RequestBody @Valid User user) throws IdException {
