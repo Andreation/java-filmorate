@@ -18,28 +18,26 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> FilmNotFoundException(final FilmNotFoundException e) {
+    public Map<String, String> handleFilmNotFoundException(final FilmNotFoundException e) {
         return Map.of("ERROR", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> UserNotFoundException(final UserNotFoundException e) {
+    public Map<String, String> handleUserNotFoundException(final UserNotFoundException e) {
         return Map.of("ERROR", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> FilmDateException(final FilmDateException e) {
+    public Map<String, String> handleFilmDateException(final FilmDateException e) {
         return Map.of("ERROR", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> IdException(final IdException e) {
+    public Map<String, String> handleIdException(final IdException e) {
         return Map.of("ERROR", e.getMessage());
     }
-
-
 
 }
