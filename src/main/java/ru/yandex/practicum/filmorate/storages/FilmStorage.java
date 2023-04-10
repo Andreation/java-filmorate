@@ -8,18 +8,19 @@ import java.util.ArrayList;
 
 public interface FilmStorage {
     Film save(Film film) throws IdException, FilmDateException;
+
     Film update(Film film) throws IdException;
+
     Film getFilm(int id) throws IdException;
 
     Film deleteFilm(int id);
 
     ArrayList<Film> getFilms();
 
-
     Film likeFilm(int id, long userId) throws IdException;
-
 
     ArrayList<Film> getTopFilms(int count);
 
     Film deleteLike(int id, long userId) throws IdException;
+
 }
