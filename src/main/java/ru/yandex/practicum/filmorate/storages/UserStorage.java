@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.storages;
 
 import ru.yandex.practicum.filmorate.exceptions.IdException;
+import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
@@ -20,6 +21,6 @@ public interface UserStorage {
 
     ArrayList<User> getFriendsList(long id) throws IdException;
 
-    User getUser(long id);
+    User getUser(long id) throws UserNotFoundException;
 
 }

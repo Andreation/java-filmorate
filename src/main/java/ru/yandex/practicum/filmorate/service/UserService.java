@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
+import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storages.UserStorage;
 
@@ -48,7 +49,7 @@ public class UserService {
         return userStorage.getFriendsList(id);
     }
 
-    public User getUser(long id) {
+    public User getUser(long id) throws UserNotFoundException {
         return userStorage.getUser(id);
     }
 
