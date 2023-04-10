@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storages.InMemoryUserStorage;
 import ru.yandex.practicum.filmorate.storages.UserStorage;
 
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ public class UserService {
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
+
     private final UserStorage userStorage;
 
     public User save(User user) throws IdException {

@@ -10,9 +10,6 @@ import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.*;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.storages.FilmStorage;
-import ru.yandex.practicum.filmorate.storages.InMemoryFilmStorage;
-import ru.yandex.practicum.filmorate.validate.ValidateService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -26,6 +23,7 @@ public class FilmController {
     public FilmController(FilmService filmService) throws IdException {
         this.filmService = filmService;
     }
+
     private final FilmService filmService;
 
     @PostMapping()
@@ -52,7 +50,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count){
+    public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count) {
         return filmService.getTopFilms(count);
     }
 

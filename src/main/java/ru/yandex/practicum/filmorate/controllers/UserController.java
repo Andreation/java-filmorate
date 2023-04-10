@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
-import ru.yandex.practicum.filmorate.storages.InMemoryUserStorage;
-import ru.yandex.practicum.filmorate.storages.UserStorage;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -22,6 +20,7 @@ public class UserController {
     public UserController(UserService userService){
         this.userService = userService;
     }
+
     private final UserService userService;
 
     @PostMapping()

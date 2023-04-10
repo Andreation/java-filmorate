@@ -12,19 +12,18 @@ import ru.yandex.practicum.filmorate.storages.FilmStorage;
 import ru.yandex.practicum.filmorate.storages.UserStorage;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 @Service
 @Slf4j
 public class FilmService {
-    private final FilmStorage filmStorage;
-    private final UserStorage userStorage;
-
     @Autowired
     public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
         this.filmStorage = filmStorage;
         this.userStorage = userStorage;
     }
+
+    private final FilmStorage filmStorage;
+    private final UserStorage userStorage;
 
     public Film saveFilm(Film film) throws IdException, FilmDateException {
         return filmStorage.save(film);
