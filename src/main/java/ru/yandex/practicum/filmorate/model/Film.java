@@ -14,6 +14,14 @@ import java.util.Set;
 @NoArgsConstructor
 
 public class Film {
+    public Film(Integer id, String name, String description, LocalDate releaseDate, int duration) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+    }
+
     Integer id;
     @NotBlank
     String name;
@@ -25,11 +33,4 @@ public class Film {
     int duration;
     Set<Long> likesList = new HashSet<>();
 
-    public Film(Integer id, String name, String description, LocalDate releaseDate, int duration) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.releaseDate = releaseDate;
-        this.duration = duration;
-    }
 }

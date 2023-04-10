@@ -5,5 +5,4 @@ public class IdException extends Exception {
         super(message);
     }
 
-
 }
