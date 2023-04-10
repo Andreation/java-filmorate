@@ -4,39 +4,19 @@ import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-public class UserStorage {
-    Map<Integer, User> users = new LinkedHashMap<>();
-    protected Integer id = 0;
+public interface UserStorage {
+    User save(User user) throws IdException;
+    User update(User user) throws IdException;
+    ArrayList<User> getUsers();
 
-    public void save(User user) throws IdException {
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-        if (!users.containsKey(user.getId())) {
-            user.setId(++id);
-            users.put(user.getId(), user);
-        } else {
-            throw new IdException("Не верно введен id");
-        }
-    }
+    ArrayList<User> getMutualFriendsList(long id, long otherId) throws IdException;
 
-    public void update(User user) throws IdException {
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-            if (users.containsKey(user.getId())) {
-                users.put(user.getId(), user);
-            } else {
-                throw new IdException("Не верно введен id");
-            }
-    }
+    User deleteFriend(long id, long friendId) throws IdException;
 
-    public ArrayList<User> getUsers() {
-        System.out.println(users.toString());
-        return new ArrayList<>(users.values());
-    }
+    User addFriend(long id, long friendId) throws IdException;
 
+    ArrayList<User> getFriendsList(long id) throws IdException;
+
+    User getUser(long id);
 }

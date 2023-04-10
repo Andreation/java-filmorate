@@ -1,34 +1,25 @@
 package ru.yandex.practicum.filmorate.storages;
 
+import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.util.*;
+import java.util.ArrayList;
 
-public class FilmStorage {
-    Map<Integer, Film> films = new LinkedHashMap<>();
-    protected Integer id = 0;
+public interface FilmStorage {
+    Film save(Film film) throws IdException, FilmDateException;
+    Film update(Film film) throws IdException;
+    Film getFilm(int id) throws IdException;
 
-    public void save(Film film) throws IdException {
-        if (!films.containsKey(film.getId())) {
-            film.setId(++id);
-            films.put(film.getId(), film);
-        } else {
-            throw new IdException("Не верно введен id");
-        }
-    }
+    Film deleteFilm(int id);
 
-    public void update(Film film) throws IdException {
-        if (films.containsKey(film.getId())) {
-            films.put(film.getId(), film);
-        } else {
-            throw new IdException("Не верно введен id");
-        }
-    }
+    ArrayList<Film> getFilms();
 
-    public ArrayList<Film> getFilms() {
-        System.out.println(films.toString());
-        return new ArrayList<>(films.values());
-    }
 
+    Film likeFilm(int id, long userId) throws IdException;
+
+
+    ArrayList<Film> getTopFilms(int count);
+
+    Film deleteLike(int id, long userId) throws IdException;
 }

@@ -6,13 +6,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class User {
-    Integer id;
+    Long id;
     @Email
     String email;
     @NotBlank
@@ -20,4 +22,12 @@ public class User {
     String name;
     @Past
     LocalDate birthday;
+    Set<Long> friendsList = new TreeSet<>();
+    public User(Long id, String email, String login, String name, LocalDate birthday) {
+        this.id = id;
+        this.email = email;
+        this.login = login;
+        this.name = name;
+        this.birthday = birthday;
+    }
 }
