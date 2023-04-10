@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @RequestMapping("users")
 public class UserController {
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
-    public ArrayList<User> getMutualFriendsList(@PathVariable int id, @PathVariable int otherId ) throws IdException {
+    public ArrayList<User> getMutualFriendsList(@PathVariable int id, @PathVariable int otherId) throws IdException {
         return userService.getMutualFriendsList(id, otherId);
     }
 
