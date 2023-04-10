@@ -24,7 +24,7 @@ public class UserService {
         return userStorage.save(user);
     }
 
-    public User update(User user) throws IdException {
+    public User update(User user) throws UserNotFoundException {
         return userStorage.update(user);
     }
 
@@ -32,20 +32,20 @@ public class UserService {
         return userStorage.getUsers();
     }
 
-    public User addFriend(long id, long friendId) throws IdException {
+    public User addFriend(long id, long friendId) throws UserNotFoundException {
 
         return userStorage.addFriend(id, friendId);
     }
 
-    public User deleteFriend(long id, long friendId) throws IdException {
+    public User deleteFriend(long id, long friendId) throws UserNotFoundException {
         return userStorage.deleteFriend(id, friendId);
     }
 
-    public ArrayList<User> getMutualFriendsList(long id, long otherId) throws IdException {
+    public ArrayList<User> getMutualFriendsList(long id, long otherId) throws UserNotFoundException {
         return userStorage.getMutualFriendsList(id, otherId);
     }
 
-    public ArrayList<User> getFriendsList(long id) throws IdException {
+    public ArrayList<User> getFriendsList(long id) throws UserNotFoundException {
         return userStorage.getFriendsList(id);
     }
 

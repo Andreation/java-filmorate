@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @RequestMapping("films")
 public class FilmController {
     @Autowired
-    public FilmController(FilmService filmService) throws IdException {
+    public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
@@ -33,7 +33,7 @@ public class FilmController {
     }
 
     @PutMapping()
-    public Film put(@RequestBody @Valid Film film) throws IdException {
+    public Film put(@RequestBody @Valid Film film) throws FilmNotFoundException {
         filmService.updateFilm(film);
         return film;
     }

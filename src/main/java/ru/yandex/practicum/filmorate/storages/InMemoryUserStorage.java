@@ -25,7 +25,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
-    public User update(User user) throws IdException {
+    public User update(User user) throws UserNotFoundException {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
@@ -33,7 +33,7 @@ public class InMemoryUserStorage implements UserStorage {
                 users.put(user.getId(), user);
                 return user;
             } else {
-                throw new IdException("Не верно введен id");
+                throw new UserNotFoundException("пользыватель не найден");
             }
     }
 
@@ -42,27 +42,27 @@ public class InMemoryUserStorage implements UserStorage {
         return new ArrayList<>(users.values());
     }
 
-    public User addFriend(long id, long friendId) throws IdException {
+    public User addFriend(long id, long friendId) throws UserNotFoundException {
         if (users.containsKey(id) && users.containsKey(friendId)) {
             users.get(id).getFriendsList().add(friendId);
             users.get(friendId).getFriendsList().add(id);
             return users.get(id);
         } else {
-            throw new IdException("Не верно введен id");
+            throw new UserNotFoundException("пользыватель не найден");
         }
     }
 
-    public User deleteFriend(long id, long friendId) throws IdException {
+    public User deleteFriend(long id, long friendId) throws UserNotFoundException {
         if (users.containsKey(id) && users.containsKey(friendId)) {
             users.get(id).getFriendsList().remove(friendId);
             users.get(friendId).getFriendsList().remove(id);
             return users.get(id);
         } else {
-            throw new IdException("Не верно введен id");
+            throw new UserNotFoundException("пользыватель не найден");
         }
     }
 
-    public ArrayList<User> getFriendsList(long id) throws IdException {
+    public ArrayList<User> getFriendsList(long id) throws UserNotFoundException {
         ArrayList<User> friendList = new ArrayList<>();
         if (users.containsKey(id)) {
             for (long idFriend : users.get(id).getFriendsList()) {
@@ -70,11 +70,11 @@ public class InMemoryUserStorage implements UserStorage {
             }
             return friendList;
         } else {
-            throw new IdException("Не верно введен id");
+            throw new UserNotFoundException("пользыватель не найден");
         }
     }
 
-    public ArrayList<User> getMutualFriendsList(long id, long otherId) throws IdException {
+    public ArrayList<User> getMutualFriendsList(long id, long otherId) throws UserNotFoundException {
         ArrayList<User> mutualFriends = new ArrayList<>();
         if (users.containsKey(id) && users.containsKey(otherId)) {
             for (long friendId: users.get(id).getFriendsList()) {
@@ -83,7 +83,7 @@ public class InMemoryUserStorage implements UserStorage {
                 }
             }
         } else {
-            throw new IdException("Не верно введен id");
+            throw new UserNotFoundException("пользыватель не найден");
         }
         return mutualFriends;
     }

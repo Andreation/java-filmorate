@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.storages;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
+import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.model.Film;
 
@@ -25,12 +26,12 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    public Film update(Film film) throws IdException {
+    public Film update(Film film) throws FilmNotFoundException {
         if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
             return film;
         } else {
-            throw new IdException("Не верно введен id");
+            throw new FilmNotFoundException("film no found");
         }
     }
 
@@ -40,11 +41,11 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
 
-    public Film getFilm(int id) throws IdException {
+    public Film getFilm(int id) throws FilmNotFoundException {
         if (films.containsKey(id)) {
             return films.get(id);
         } else {
-            throw new IdException("das");
+            throw new FilmNotFoundException("film no found");
         }
 
     }
@@ -56,21 +57,21 @@ public class InMemoryFilmStorage implements FilmStorage {
 
 
 
-    public Film likeFilm(int id, long userId) throws IdException {
+    public Film likeFilm(int id, long userId) throws FilmNotFoundException {
         if (films.containsKey(id)) {
             films.get(id).getLikesList().add(userId);
             return films.get(id);
         } else {
-            throw new IdException("Не верно введен id");
+            throw new FilmNotFoundException("film no found");
         }
     }
 
-    public Film deleteLike(int id, long userId) throws IdException {
+    public Film deleteLike(int id, long userId) throws FilmNotFoundException {
         if (films.containsKey(id) && films.get(id).getLikesList().contains(userId)) {
             films.get(id).getLikesList().remove(userId);
             return films.get(id);
         } else {
-            throw new IdException("Не верно введен id");
+            throw new FilmNotFoundException("film no found");
         }
     }
 

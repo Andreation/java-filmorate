@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping()
-    public User put(@RequestBody @Valid User user) throws IdException {
+    public User put(@RequestBody @Valid User user) throws UserNotFoundException {
         userService.update(user);
         return user;
     }
@@ -42,22 +42,22 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public User addFriend(@PathVariable int id, @PathVariable int friendId) throws IdException {
+    public User addFriend(@PathVariable int id, @PathVariable int friendId) throws UserNotFoundException {
         return userService.addFriend(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
-    public User deleteFriend(@PathVariable int id, @PathVariable int friendId) throws IdException {
+    public User deleteFriend(@PathVariable int id, @PathVariable int friendId) throws UserNotFoundException {
         return userService.deleteFriend(id, friendId);
     }
 
     @GetMapping("/{id}/friends")
-    public ArrayList<User> getFriendsList(@PathVariable int id) throws IdException {
+    public ArrayList<User> getFriendsList(@PathVariable int id) throws UserNotFoundException {
         return userService.getFriendsList(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
-    public ArrayList<User> getMutualFriendsList(@PathVariable int id, @PathVariable int otherId) throws IdException {
+    public ArrayList<User> getMutualFriendsList(@PathVariable int id, @PathVariable int otherId) throws UserNotFoundException {
         return userService.getMutualFriendsList(id, otherId);
     }
 

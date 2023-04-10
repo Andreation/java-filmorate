@@ -29,7 +29,7 @@ public class FilmService {
         return filmStorage.save(film);
     }
 
-    public Film updateFilm(Film film) throws IdException {
+    public Film updateFilm(Film film) throws FilmNotFoundException {
         return filmStorage.update(film);
     }
 
@@ -41,7 +41,7 @@ public class FilmService {
         return filmStorage.getFilms();
     }
 
-    public Film getFilm(int id) throws IdException {
+    public Film getFilm(int id) throws FilmNotFoundException {
         return filmStorage.getFilm(id);
     }
 
