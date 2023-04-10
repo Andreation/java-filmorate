@@ -7,13 +7,14 @@ import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
 import java.util.*;
+
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     Map<Integer, Film> films = new LinkedHashMap<>();
     protected Integer id = 0;
 
     public Film save(Film film) throws IdException, FilmDateException {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895,2, 27))){
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895,2, 27))) {
             throw new FilmDateException("Не верно введена дата");
         } else if ((!films.containsKey(film.getId()))) {
             film.setId(++id);
@@ -40,7 +41,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
 
     public Film getFilm(int id) throws IdException {
-        if (films.containsKey(id)){
+        if (films.containsKey(id)) {
             return films.get(id);
         } else {
             throw new IdException("das");
@@ -56,7 +57,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
 
     public Film likeFilm(int id, long userId) throws IdException {
-        if (films.containsKey(id)){
+        if (films.containsKey(id)) {
             films.get(id).getLikesList().add(userId);
             return films.get(id);
         } else {
@@ -65,7 +66,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     public Film deleteLike(int id, long userId) throws IdException {
-        if (films.containsKey(id) && films.get(id).getLikesList().contains(userId)){
+        if (films.containsKey(id) && films.get(id).getLikesList().contains(userId)) {
             films.get(id).getLikesList().remove(userId);
             return films.get(id);
         } else {
