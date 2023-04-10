@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public interface UserStorage {
     User save(User user) throws IdException;
+
     User update(User user) throws IdException;
+
     ArrayList<User> getUsers();
 
     ArrayList<User> getMutualFriendsList(long id, long otherId) throws IdException;
@@ -19,4 +21,5 @@ public interface UserStorage {
     ArrayList<User> getFriendsList(long id) throws IdException;
 
     User getUser(long id);
+
 }
