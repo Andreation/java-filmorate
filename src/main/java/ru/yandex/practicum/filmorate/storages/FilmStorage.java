@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.storages;
 import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
 import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
+import ru.yandex.practicum.filmorate.exceptions.NegativeNumberException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public interface FilmStorage {
 
     Film likeFilm(int id, long userId) throws FilmNotFoundException;
 
-    ArrayList<Film> getTopFilms(int count);
+    ArrayList<Film> getTopFilms(int count) throws NegativeNumberException;
 
     Film deleteLike(int id, long userId) throws FilmNotFoundException;
 

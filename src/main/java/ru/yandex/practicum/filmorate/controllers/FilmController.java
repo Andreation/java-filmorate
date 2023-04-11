@@ -4,14 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
-import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
-import ru.yandex.practicum.filmorate.exceptions.IdException;
-import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.*;
 import ru.yandex.practicum.filmorate.model.*;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 
 @Slf4j
@@ -50,7 +48,7 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count) {
+    public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count) throws NegativeNumberException {
         return filmService.getTopFilms(count);
     }
 

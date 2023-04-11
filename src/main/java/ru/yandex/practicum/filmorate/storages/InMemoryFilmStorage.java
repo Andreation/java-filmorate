@@ -4,10 +4,12 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
 import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
+import ru.yandex.practicum.filmorate.exceptions.NegativeNumberException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
@@ -75,8 +77,21 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    public ArrayList<Film> getTopFilms(int count) {
-        return new ArrayList<>(films.values());
+    public ArrayList<Film> getTopFilms(int count) throws NegativeNumberException {
+        if (count > 0) {
+            return (ArrayList<Film>) new ArrayList<>(films.values()).stream()
+                    .sorted((o1, o2) -> {
+                        if (o1.getLikesList().size() == o2.getLikesList().size())
+                            return o1.getName().compareTo(o2.getName());
+                        else if (o1.getLikesList().size() < o2.getLikesList().size())
+                            return 1;
+                        else return -1;
+                    })
+                    .limit(count)
+                    .collect(Collectors.toList());
+        } else {
+            throw new NegativeNumberException("negativeNumberException");
+        }
     }
 
 }
