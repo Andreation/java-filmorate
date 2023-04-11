@@ -56,5 +56,10 @@ public class FilmController {
         return filmService.getTopFilms(count);
     }
 
+    @DeleteMapping("/{id}/films/{userId}")
+    public Film deleteFriend(@PathVariable int id, @PathVariable int userId) throws UserNotFoundException, FilmNotFoundException, IdException {
+        return filmService.deleteLike(id, userId);
+    }
+
 }
 
