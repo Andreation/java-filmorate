@@ -29,6 +29,7 @@ public class Film {
     String description;
     @Past
     LocalDate releaseDate;
+    int rate;
     @Positive
     int duration;
     Set<Long> likesList = new HashSet<>();
