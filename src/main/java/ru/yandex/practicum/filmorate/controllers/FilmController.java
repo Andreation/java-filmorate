@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.model.*;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 
 @Slf4j
