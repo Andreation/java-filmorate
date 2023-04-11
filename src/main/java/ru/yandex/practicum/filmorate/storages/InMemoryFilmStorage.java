@@ -53,7 +53,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     public ArrayList<Film> getFilms() {
-        System.out.println(films.toString());
         return new ArrayList<>(films.values());
     }
 

@@ -24,33 +24,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping()
-    public User post(@RequestBody @Valid User user) throws IdException {
-        userService.save(user);
-        return user;
-    }
-
-    @PutMapping()
-    public User put(@RequestBody @Valid User user) throws UserNotFoundException {
-        userService.update(user);
-        return user;
-    }
-
-    @GetMapping()
-    public ArrayList<User> getUsers() {
-        return userService.getUsers();
-    }
-
-    @PutMapping("/{id}/friends/{friendId}")
-    public User addFriend(@PathVariable int id, @PathVariable int friendId) throws UserNotFoundException {
-        return userService.addFriend(id, friendId);
-    }
-
-    @DeleteMapping("/{id}/friends/{friendId}")
-    public User deleteFriend(@PathVariable int id, @PathVariable int friendId) throws UserNotFoundException {
-        return userService.deleteFriend(id, friendId);
-    }
-
     @GetMapping("/{id}/friends")
     public ArrayList<User> getFriendsList(@PathVariable int id) throws UserNotFoundException {
         return userService.getFriendsList(id);
@@ -66,4 +39,32 @@ public class UserController {
         System.out.println(id);
         return userService.getUser(id);
     }
+
+    @GetMapping()
+    public ArrayList<User> getUsers() {
+        return userService.getUsers();
+    }
+
+    @PostMapping()
+    public User post(@RequestBody @Valid User user) throws IdException {
+        userService.save(user);
+        return user;
+    }
+
+    @PutMapping()
+    public User put(@RequestBody @Valid User user) throws UserNotFoundException {
+        userService.update(user);
+        return user;
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public User addFriend(@PathVariable int id, @PathVariable int friendId) throws UserNotFoundException {
+        return userService.addFriend(id, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public User deleteFriend(@PathVariable int id, @PathVariable int friendId) throws UserNotFoundException {
+        return userService.deleteFriend(id, friendId);
+    }
+
 }

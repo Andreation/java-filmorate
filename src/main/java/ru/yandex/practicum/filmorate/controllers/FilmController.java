@@ -23,6 +23,21 @@ public class FilmController {
 
     private final FilmService filmService;
 
+    @GetMapping()
+    public ArrayList<Film> getFilms() {
+        return filmService.getFilms();
+    }
+
+    @GetMapping("/{id}")
+    public Film getFilm(@PathVariable int id) throws FilmNotFoundException {
+        return filmService.getFilm(id);
+    }
+
+    @GetMapping("/popular")
+    public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count) throws NegativeNumberException {
+        return filmService.getTopFilms(count);
+    }
+
     @PostMapping()
     public Film post(@RequestBody @Valid Film film) throws IdException, FilmDateException {
         filmService.saveFilm(film);
@@ -35,26 +50,11 @@ public class FilmController {
         return film;
     }
 
-    @GetMapping()
-    public ArrayList<Film> getFilms() {
-        return filmService.getFilms();
-    }
-
-    @GetMapping("/{id}")
-    public Film getFilm(@PathVariable int id) throws FilmNotFoundException {
-        return filmService.getFilm(id);
-    }
-
     @PutMapping("/{id}/like/{userId}")
     public Film addLike(@PathVariable int id, @PathVariable int userId) throws IdException, FilmNotFoundException, UserNotFoundException {
         System.out.println(id + " " + userId);
         filmService.addLike(id, userId);
         return filmService.getFilm(id);
-    }
-
-    @GetMapping("/popular")
-    public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count) throws NegativeNumberException {
-        return filmService.getTopFilms(count);
     }
 
     @DeleteMapping("/{id}/like/{userId}")

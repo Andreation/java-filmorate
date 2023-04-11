@@ -58,18 +58,16 @@ public class FilmService {
         return filmStorage.getTopFilms(count);
     }
 
-    public boolean userExists(int userId) throws UserNotFoundException {
+    public void userExists(int userId) throws UserNotFoundException {
         if (userStorage.getUser(userId) == null) {
             throw new UserNotFoundException("user no found");
         }
-        return true;
     }
 
-    public boolean filmExists(int filmId) throws IdException, FilmNotFoundException {
+    public void filmExists(int filmId) throws FilmNotFoundException {
         if (filmStorage.getFilm(filmId) == null) {
             throw new FilmNotFoundException("film no found");
         }
-        return true;
     }
 
 }
