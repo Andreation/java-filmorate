@@ -40,6 +40,11 @@ public class FilmController {
         return filmService.getFilms();
     }
 
+    @GetMapping("/{id}")
+    public Film getFilm(@PathVariable int id) throws FilmNotFoundException {
+        return filmService.getFilm(id);
+    }
+
     @PutMapping("/{id}/like/{userId}")
     public Film addLike(@PathVariable int id, @PathVariable int userId) throws IdException, FilmNotFoundException, UserNotFoundException {
         filmService.addLike(id, userId);
@@ -50,18 +55,6 @@ public class FilmController {
     public ArrayList<Film> getTopFilms(@RequestParam(defaultValue = "10", required = false) int count) throws NegativeNumberException {
         return filmService.getTopFilms(count);
     }
-
-
-
-
-
-//    @PutMapping("{id}/like/{userId}")
-//    public Optional<Post> findById(@PathVariable int id, @PathVariable long userId) {
-//
-//        return posts.stream()
-//                .filter(x -> x.getId() == postId)
-//                .findFirst();
-//    }
 
 }
 

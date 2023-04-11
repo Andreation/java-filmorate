@@ -60,7 +60,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film likeFilm(int id, long userId) throws FilmNotFoundException {
         if (films.containsKey(id)) {
             films.get(id).getLikesList().add(userId);
-            films.get(id).setRate(films.get(id).getRate() + 1);
             return films.get(id);
         } else {
             throw new FilmNotFoundException("film no found");
@@ -70,7 +69,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film deleteLike(int id, long userId) throws FilmNotFoundException {
         if (films.containsKey(id) && films.get(id).getLikesList().contains(userId)) {
             films.get(id).getLikesList().remove(userId);
-            films.get(id).setRate(films.get(id).getRate() - 1);
             return films.get(id);
         } else {
             throw new FilmNotFoundException("film no found");
