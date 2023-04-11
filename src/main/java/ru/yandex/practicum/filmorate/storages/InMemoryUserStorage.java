@@ -33,7 +33,7 @@ public class InMemoryUserStorage implements UserStorage {
                 users.put(user.getId(), user);
                 return user;
             } else {
-                throw new UserNotFoundException("пользыватель не найден");
+                throw new UserNotFoundException("user no found");
             }
     }
 
@@ -48,7 +48,7 @@ public class InMemoryUserStorage implements UserStorage {
             users.get(friendId).getFriendsList().add(id);
             return users.get(id);
         } else {
-            throw new UserNotFoundException("пользыватель не найден");
+            throw new UserNotFoundException("user no found");
         }
     }
 
@@ -58,7 +58,7 @@ public class InMemoryUserStorage implements UserStorage {
             users.get(friendId).getFriendsList().remove(id);
             return users.get(id);
         } else {
-            throw new UserNotFoundException("пользыватель не найден");
+            throw new UserNotFoundException("user no found");
         }
     }
 
@@ -70,7 +70,7 @@ public class InMemoryUserStorage implements UserStorage {
             }
             return friendList;
         } else {
-            throw new UserNotFoundException("пользыватель не найден");
+            throw new UserNotFoundException("user no found");
         }
     }
 
@@ -83,7 +83,7 @@ public class InMemoryUserStorage implements UserStorage {
                 }
             }
         } else {
-            throw new UserNotFoundException("пользыватель не найден");
+            throw new UserNotFoundException("user no found");
         }
         return mutualFriends;
     }
@@ -92,7 +92,7 @@ public class InMemoryUserStorage implements UserStorage {
         if (users.containsKey(id)) {
             return users.get(id);
         } else {
-            throw new UserNotFoundException("пользыватель не найден");
+            throw new UserNotFoundException("user no found");
         }
 
     }

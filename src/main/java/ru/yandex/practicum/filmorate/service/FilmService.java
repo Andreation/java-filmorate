@@ -62,15 +62,15 @@ public class FilmService {
     }
 
     public boolean userExists(int userId) throws UserNotFoundException {
-        if (!userStorage.getUsers().contains(userId)) {
-            throw new UserNotFoundException("Пользователь c id: " + userId + "не найден");
+        if (userStorage.getUser(userId) == null) {
+            throw new UserNotFoundException("user no found");
         }
         return true;
     }
 
     public boolean filmExists(int filmId) throws IdException, FilmNotFoundException {
-        if (!filmStorage.getFilms().contains(filmStorage.getFilm(filmId))) {
-            throw new FilmNotFoundException("Фильм c id: " + filmId + "не найден");
+        if (filmStorage.getFilm(filmId) == null) {
+            throw new FilmNotFoundException("film no found");
         }
         return true;
     }
