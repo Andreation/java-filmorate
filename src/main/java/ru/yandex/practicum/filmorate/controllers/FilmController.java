@@ -47,6 +47,7 @@ public class FilmController {
 
     @PutMapping("/{id}/like/{userId}")
     public Film addLike(@PathVariable int id, @PathVariable int userId) throws IdException, FilmNotFoundException, UserNotFoundException {
+        System.out.println(id + " " + userId);
         filmService.addLike(id, userId);
         return filmService.getFilm(id);
     }
@@ -56,8 +57,9 @@ public class FilmController {
         return filmService.getTopFilms(count);
     }
 
-    @DeleteMapping("/{id}/films/{userId}")
-    public Film deleteFriend(@PathVariable int id, @PathVariable int userId) throws UserNotFoundException, FilmNotFoundException, IdException {
+    @DeleteMapping("/{id}/like/{userId}")
+    public Film deleteLike(@PathVariable int id, @PathVariable int userId) throws UserNotFoundException, FilmNotFoundException, IdException {
+        System.out.println(id + " " + userId);
         return filmService.deleteLike(id, userId);
     }
 
