@@ -19,12 +19,14 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("films")
 public class FilmController {
+    private final FilmService filmService;
+
     @Autowired
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
-    private final FilmService filmService;
+
 
     @GetMapping()
     public ArrayList<Film> getFilms() {

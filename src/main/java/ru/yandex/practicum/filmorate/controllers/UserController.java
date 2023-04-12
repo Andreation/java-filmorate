@@ -15,12 +15,14 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("users")
 public class UserController {
+    private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    private final UserService userService;
+
 
     @GetMapping("/{id}/friends")
     public ArrayList<User> getFriendsList(@PathVariable int id) {
