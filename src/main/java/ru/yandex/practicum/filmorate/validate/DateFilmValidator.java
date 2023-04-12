@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.validate;
 
-import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import javax.validation.ConstraintValidator;
