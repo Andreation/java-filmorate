@@ -2,11 +2,14 @@ package ru.yandex.practicum.filmorate.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.filmorate.exceptions.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Map;
 
 @Slf4j
@@ -33,13 +36,13 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleNegativeNumberException(final NegativeNumberException e) {
+    public Map<String, String> handleIdException(final IdException e) {
         return Map.of("ERROR", e.getMessage());
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleIdException(final IdException e) {
+    public Map<String, String> handleConstraintViolationException(final ConstraintViolationException e) {
         return Map.of("ERROR", e.getMessage());
     }
 

@@ -6,8 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Getter
 @Setter
@@ -30,6 +30,6 @@ public class User {
     String name;
     @Past
     LocalDate birthday;
-    Set<Long> friendsList = new TreeSet<>();
+    Set<Long> friendsList = new HashSet<>();
 
 }

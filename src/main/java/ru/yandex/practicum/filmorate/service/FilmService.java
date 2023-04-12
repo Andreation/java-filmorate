@@ -13,20 +13,20 @@ import java.util.ArrayList;
 @Service
 @Slf4j
 public class FilmService {
+    private final FilmStorage filmStorage;
+    private final UserStorage userStorage;
+
     @Autowired
     public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
         this.filmStorage = filmStorage;
         this.userStorage = userStorage;
     }
 
-    private final FilmStorage filmStorage;
-    private final UserStorage userStorage;
-
-    public Film saveFilm(Film film) throws IdException, FilmDateException {
+    public Film saveFilm(Film film) {
         return filmStorage.save(film);
     }
 
-    public Film updateFilm(Film film) throws FilmNotFoundException {
+    public Film updateFilm(Film film) {
         return filmStorage.update(film);
     }
 
@@ -38,33 +38,33 @@ public class FilmService {
         return filmStorage.getFilms();
     }
 
-    public Film getFilm(int id) throws FilmNotFoundException {
+    public Film getFilm(int id) {
         return filmStorage.getFilm(id);
     }
 
-    public Film addLike(int filmId, int userId) throws IdException, FilmNotFoundException, UserNotFoundException {
+    public Film addLike(int filmId, int userId) {
         filmExists(filmId);
         userExists(userId);
         return filmStorage.likeFilm(filmId, userId);
     }
 
-    public Film deleteLike(int filmId, int userId) throws IdException, FilmNotFoundException, UserNotFoundException {
+    public Film deleteLike(int filmId, int userId) {
         filmExists(filmId);
         userExists(userId);
         return filmStorage.deleteLike(filmId, userId);
     }
 
-    public ArrayList<Film> getTopFilms(int count) throws NegativeNumberException {
+    public ArrayList<Film> getTopFilms(int count) {
         return filmStorage.getTopFilms(count);
     }
 
-    public void userExists(int userId) throws UserNotFoundException {
+    public void userExists(int userId) {
         if (userStorage.getUser(userId) == null) {
             throw new UserNotFoundException("user no found");
         }
     }
 
-    public void filmExists(int filmId) throws FilmNotFoundException {
+    public void filmExists(int filmId) {
         if (filmStorage.getFilm(filmId) == null) {
             throw new FilmNotFoundException("film no found");
         }

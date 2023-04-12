@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
-import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storages.UserStorage;
 
@@ -13,18 +12,19 @@ import java.util.ArrayList;
 @Service
 @Slf4j
 public class UserService {
+    private final UserStorage userStorage;
+
     @Autowired
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
-    private final UserStorage userStorage;
 
     public User save(User user) throws IdException {
         return userStorage.save(user);
     }
 
-    public User update(User user) throws UserNotFoundException {
+    public User update(User user) {
         return userStorage.update(user);
     }
 
@@ -32,24 +32,24 @@ public class UserService {
         return userStorage.getUsers();
     }
 
-    public User addFriend(long id, long friendId) throws UserNotFoundException {
+    public User addFriend(long id, long friendId) {
 
         return userStorage.addFriend(id, friendId);
     }
 
-    public User deleteFriend(long id, long friendId) throws UserNotFoundException {
+    public User deleteFriend(long id, long friendId) {
         return userStorage.deleteFriend(id, friendId);
     }
 
-    public ArrayList<User> getMutualFriendsList(long id, long otherId) throws UserNotFoundException {
+    public ArrayList<User> getMutualFriendsList(long id, long otherId) {
         return userStorage.getMutualFriendsList(id, otherId);
     }
 
-    public ArrayList<User> getFriendsList(long id) throws UserNotFoundException {
+    public ArrayList<User> getFriendsList(long id) {
         return userStorage.getFriendsList(id);
     }
 
-    public User getUser(long id) throws UserNotFoundException {
+    public User getUser(long id) {
         return userStorage.getUser(id);
     }
 

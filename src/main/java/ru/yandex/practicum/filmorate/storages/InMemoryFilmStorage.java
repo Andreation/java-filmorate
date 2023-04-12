@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exceptions.FilmDateException;
 import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
-import ru.yandex.practicum.filmorate.exceptions.NegativeNumberException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
@@ -16,10 +15,8 @@ public class InMemoryFilmStorage implements FilmStorage {
     Map<Integer, Film> films = new LinkedHashMap<>();
     protected Integer id = 0;
 
-    public Film save(Film film) throws IdException, FilmDateException {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895,2, 27))) {
-            throw new FilmDateException("Не верно введена дата");
-        } else if ((!films.containsKey(film.getId()))) {
+    public Film save(Film film) {
+        if ((!films.containsKey(film.getId()))) {
             film.setId(++id);
             films.put(film.getId(), film);
             return film;
@@ -28,7 +25,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    public Film update(Film film) throws FilmNotFoundException {
+    public Film update(Film film) {
         if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
             return film;
@@ -43,7 +40,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
 
-    public Film getFilm(int id) throws FilmNotFoundException {
+    public Film getFilm(int id) {
         if (films.containsKey(id)) {
             return films.get(id);
         } else {
@@ -56,7 +53,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return new ArrayList<>(films.values());
     }
 
-    public Film likeFilm(int id, long userId) throws FilmNotFoundException {
+    public Film likeFilm(int id, long userId) {
         if (films.containsKey(id)) {
             films.get(id).getLikesList().add(userId);
             return films.get(id);
@@ -65,7 +62,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    public Film deleteLike(int id, long userId) throws FilmNotFoundException {
+    public Film deleteLike(int id, long userId) {
         if (films.containsKey(id) && films.get(id).getLikesList().contains(userId)) {
             films.get(id).getLikesList().remove(userId);
             return films.get(id);
@@ -74,21 +71,17 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    public ArrayList<Film> getTopFilms(int count) throws NegativeNumberException {
-        if (count > 0) {
-            return (ArrayList<Film>) new ArrayList<>(films.values()).stream()
-                    .sorted((o1, o2) -> {
-                        if (o1.getLikesList().size() == o2.getLikesList().size())
-                            return o1.getName().compareTo(o2.getName());
-                        else if (o1.getLikesList().size() < o2.getLikesList().size())
-                            return 1;
-                        else return -1;
-                    })
-                    .limit(count)
-                    .collect(Collectors.toList());
-        } else {
-            throw new NegativeNumberException("negativeNumberException");
-        }
+    public ArrayList<Film> getTopFilms(int count) {
+        return (ArrayList<Film>) new ArrayList<>(films.values()).stream()
+                .sorted((o1, o2) -> {
+                    if (o1.getLikesList().size() == o2.getLikesList().size())
+                        return o1.getName().compareTo(o2.getName());
+                    else if (o1.getLikesList().size() < o2.getLikesList().size())
+                        return 1;
+                    else return -1;
+                })
+                .limit(count)
+                .collect(Collectors.toList());
     }
 
 }

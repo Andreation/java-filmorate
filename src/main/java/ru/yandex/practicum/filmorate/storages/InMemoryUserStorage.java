@@ -12,7 +12,7 @@ public class InMemoryUserStorage implements UserStorage {
     Map<Long, User> users = new LinkedHashMap<>();
     protected Long id = Long.valueOf(0);
 
-    public User save(User user) throws IdException {
+    public User save(User user) {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
@@ -25,7 +25,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
-    public User update(User user) throws UserNotFoundException {
+    public User update(User user) {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
@@ -42,7 +42,7 @@ public class InMemoryUserStorage implements UserStorage {
         return new ArrayList<>(users.values());
     }
 
-    public User addFriend(long id, long friendId) throws UserNotFoundException {
+    public User addFriend(long id, long friendId) {
         if (users.containsKey(id) && users.containsKey(friendId)) {
             users.get(id).getFriendsList().add(friendId);
             users.get(friendId).getFriendsList().add(id);
@@ -52,7 +52,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
-    public User deleteFriend(long id, long friendId) throws UserNotFoundException {
+    public User deleteFriend(long id, long friendId) {
         if (users.containsKey(id) && users.containsKey(friendId)) {
             users.get(id).getFriendsList().remove(friendId);
             users.get(friendId).getFriendsList().remove(id);
@@ -62,7 +62,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
-    public ArrayList<User> getFriendsList(long id) throws UserNotFoundException {
+    public ArrayList<User> getFriendsList(long id) {
         ArrayList<User> friendList = new ArrayList<>();
         if (users.containsKey(id)) {
             for (long idFriend : users.get(id).getFriendsList()) {
@@ -74,7 +74,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
-    public ArrayList<User> getMutualFriendsList(long id, long otherId) throws UserNotFoundException {
+    public ArrayList<User> getMutualFriendsList(long id, long otherId) {
         ArrayList<User> mutualFriends = new ArrayList<>();
         if (users.containsKey(id) && users.containsKey(otherId)) {
             for (long friendId: users.get(id).getFriendsList()) {
@@ -88,7 +88,7 @@ public class InMemoryUserStorage implements UserStorage {
         return mutualFriends;
     }
 
-    public User getUser(long id) throws UserNotFoundException {
+    public User getUser(long id) {
         if (users.containsKey(id)) {
             return users.get(id);
         } else {
