@@ -6,11 +6,13 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class Film {
     Integer id;
     @NotBlank
@@ -19,6 +21,17 @@ public class Film {
     String description;
     @Past
     LocalDate releaseDate;
+    int rate;
     @Positive
     int duration;
+    Set<Long> likesList = new HashSet<>();
+
+    public Film(Integer id, String name, String description, LocalDate releaseDate, int duration) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+    }
+
 }
