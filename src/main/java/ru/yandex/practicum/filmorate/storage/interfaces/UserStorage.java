@@ -8,6 +8,7 @@ public interface UserStorage {
     Collection<User> getUsers();
 
     User getUser(Long id);
+
     Collection<User> getMutualFriendsList(long id, long otherId);
 
     User save(User user);
