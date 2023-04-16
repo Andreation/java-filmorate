@@ -19,10 +19,12 @@ import java.util.*;
 @Primary
 public class FilmDbStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
+    private final GenreDbStorage genreDbStorage;
 
     @Autowired
-    public FilmDbStorage(JdbcTemplate jdbcTemplate) {
+    public FilmDbStorage(JdbcTemplate jdbcTemplate, GenreDbStorage genreDbStorage) {
         this.jdbcTemplate = jdbcTemplate;
+        this.genreDbStorage = genreDbStorage;
     }
 
     @Override
@@ -159,6 +161,14 @@ public class FilmDbStorage implements FilmStorage {
         return values;
     }
 
+    private Set<Genre> makeGenreList(Long filmId) {
+        Set<Genre> genres = new HashSet<>();
+        for (Integer id : getGenres(filmId)) {
+            genres.add(genreDbStorage.getGenre(id));
+        }
+        return genres;
+    }
+
     private Film makeFilm(ResultSet rs) throws SQLException {
         Long id = rs.getLong("films.film_id");
         String name = rs.getString("films.name");
@@ -176,6 +186,7 @@ public class FilmDbStorage implements FilmStorage {
                 .duration(duration)
                 .likes(new HashSet<>(getLikes(id)))
                 .mpa(new Mpa(mpaRatingId, mpaRatingName))
+                .genres(makeGenreList(id))
                 .build();
     }
 }
