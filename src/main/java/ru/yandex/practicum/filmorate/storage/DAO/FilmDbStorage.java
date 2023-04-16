@@ -123,7 +123,7 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public Collection<Film>  getTopFilms (Integer count) {
+    public Collection<Film>  getTopFilms(Integer count) {
         return jdbcTemplate.query("SELECT * " +
                 "FROM films" +
                 "    LEFT JOIN (SELECT film_id, count(film_like.film_id) AS count " +
@@ -131,22 +131,22 @@ public class FilmDbStorage implements FilmStorage {
                 "      GROUP BY film_like.film_id) AS top ON top.film_id = films.film_id " +
                 "         INNER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id " +
                 "ORDER BY count DESC " +
-                "LIMIT ?;"
-                , (rs, rowNum) -> makeFilm(rs), count);
+                "LIMIT ?;",
+                (rs, rowNum) -> makeFilm(rs), count);
     }
 
     @Override
     public Collection<Integer> getGenres(Long id) {
         return jdbcTemplate.query(
-                "SELECT film_genre.genre_id FROM film_genre WHERE film_genre.film_id = ?"
-                , (rs, rowNum) -> rs.getInt("genre_id"), id);
+                "SELECT film_genre.genre_id FROM film_genre WHERE film_genre.film_id = ?",
+                (rs, rowNum) -> rs.getInt("genre_id"), id);
     }
 
     @Override
     public List<Long> getLikes(Long id) {
         return jdbcTemplate.query(
-                "SELECT film_like.user_id FROM film_like WHERE film_like.film_id = ?"
-                , (rs, rowNum) -> rs.getLong("user_id"), id);
+                "SELECT film_like.user_id FROM film_like WHERE film_like.film_id = ?",
+                (rs, rowNum) -> rs.getLong("user_id"), id);
     }
 
     private Map<String, Object> filmToMap(Film film) {
