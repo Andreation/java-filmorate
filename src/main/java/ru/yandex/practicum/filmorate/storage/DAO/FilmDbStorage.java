@@ -166,6 +166,7 @@ public class FilmDbStorage implements FilmStorage {
         for (Integer id : getGenres(filmId)) {
             genres.add(genreDbStorage.getGenre(id));
         }
+        genres.stream().sorted(Comparator.comparing(Genre::getId));
         return genres;
     }
 
