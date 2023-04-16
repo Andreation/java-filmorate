@@ -27,6 +27,7 @@ public class UserService {
 
     public User update(User user) {
         userExists(user.getId());
+        userStorage.update(user);
         return getUser(user.getId());
     }
 
@@ -44,6 +45,7 @@ public class UserService {
     public User deleteFriend(long id, long friendId) {
         userExists(id);
         userExists(friendId);
+        userStorage.deleteFriend(id, friendId);
         return getUser(id);
     }
 
