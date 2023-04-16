@@ -73,10 +73,9 @@ public class UserDbStorage implements UserStorage {
     }
 
     public User addFriend(Long userId, Long friendId) {
-        if (getSubsId(userId).contains(friendId.intValue()) ||
-                getFriendsId(userId).contains(friendId.intValue())) return getUser(userId);
+        if (getFriendsId(userId).contains(friendId.intValue())) return getUser(userId);
         int status = 2;
-        if (getSubsId(friendId).contains(userId.intValue())) {
+        if (getFriendsId(friendId).contains(userId.intValue())) {
             status = 1;
             String sqlQuery = "UPDATE friendship " +
                     "SET friendship_status_id  = ? " +
@@ -105,45 +104,44 @@ public class UserDbStorage implements UserStorage {
                 "WHERE user_id IN (SELECT friend_id " +
                 "FROM friendship " +
                 "WHERE user_id = ? )";
+
         return jdbcTemplate.query(sqlQuery, (rs, rowNum) -> makeUser(rs), id.intValue());
     }
 
     @Override
     public Collection<User> getMutualFriendsList(long id, long otherId) {
         Collection<User> mutualFriends = new ArrayList<>();
-        for (long friendId: getFriendsId(id)) {
+        for (int friendId: getFriendsId(id)) {
             if (getFriendsId(otherId).contains(friendId)) {
-                mutualFriends.add(getUser(friendId));
+                mutualFriends.add(getUser((long) friendId));
             }
         }
         return mutualFriends;
-    }
-
-    private Collection<Integer> getSubsId(Long id) {
-        String sqlQuery = "SELECT user_id FROM users " +
-                "WHERE user_id IN (SELECT friend_id " +
-                "FROM friendship " +
-                "WHERE friendship_status_id = 2 AND user_id = ? )";
-        return jdbcTemplate.query(sqlQuery, (rs, rowNum) -> rs.getInt("user_id"), id);
     }
 
     private Collection<Integer> getFriendsId(Long id) {
         String sqlQuery = "SELECT user_id FROM users " +
                 "WHERE user_id IN (SELECT friend_id " +
                 "FROM friendship " +
-                "WHERE friendship_status_id = 1 AND user_id = ? )";
+                "WHERE user_id = ? )";
         return jdbcTemplate.query(sqlQuery, (rs, rowNum) -> rs.getInt("user_id"), id);
     }
 
     public User deleteFriend(Long userId, Long friendId) {
-        String sqlQuery = "UPDATE friendship " +
-                "SET friendship_status_id  = ? " +
-                "WHERE friendship.user_id = ? AND friendship.friend_id = ? ";
-        jdbcTemplate.update(sqlQuery,
-                2,
-                userId,
-                friendId
-                );
+        if (getFriendsId(userId).contains(userId.intValue()) && getFriendsId(friendId).contains(userId.intValue())) {
+            String sqlQuery = "UPDATE friendship " +
+                    "SET friendship_status_id  = ? " +
+                    "WHERE friendship.user_id = ? AND friendship.friend_id = ? ";
+            jdbcTemplate.update(sqlQuery,
+                    2,
+                    friendId,
+                    userId
+            );
+        }
+        String sql =
+                "DELETE FROM friendship WHERE user_id = ? AND friend_id = ?";
+
+        jdbcTemplate.update(sql, userId, friendId);
 
         return getUser(userId);
     }
