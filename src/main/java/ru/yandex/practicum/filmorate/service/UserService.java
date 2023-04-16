@@ -22,7 +22,7 @@ public class UserService {
 
 
     public User save(User user) throws IdException {
-        return getUser(user.getId());
+        return userStorage.save(user);
     }
 
     public User update(User user) {
