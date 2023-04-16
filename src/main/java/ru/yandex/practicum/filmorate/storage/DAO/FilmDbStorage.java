@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.storage.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
@@ -61,11 +62,12 @@ public class FilmDbStorage implements FilmStorage {
 
     private void createFilmGenre(Film film) {
         if (film.getGenres() == null) return;
-        Set<Integer> genresId = new HashSet<>();
+        ArrayList<Integer> arrayGenresId = new ArrayList<>();
         for (Genre genre : film.getGenres()) {
-            genresId.add(genre.getId());
+            arrayGenresId.add(genre.getId());
         }
-
+        Collections.sort(arrayGenresId);
+        Set<Integer> genresId = new HashSet<>(arrayGenresId);
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("film_genre")
                 .usingColumns("film_id", "genre_id");
@@ -137,10 +139,14 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public Collection<Integer> getGenres(Long id) {
-        return jdbcTemplate.query(
+    public ArrayList<Integer> getGenres(Long id) {
+        Collection<Integer> g1;
+        g1 = jdbcTemplate.query(
                 "SELECT film_genre.genre_id FROM film_genre WHERE film_genre.film_id = ?",
                 (rs, rowNum) -> rs.getInt("genre_id"), id);
+        ArrayList<Integer> genersId = new ArrayList<>(g1);
+        Collections.sort(genersId);
+        return genersId;
     }
 
     @Override

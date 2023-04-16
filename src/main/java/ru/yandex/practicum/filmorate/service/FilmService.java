@@ -44,9 +44,7 @@ public class FilmService {
 
     public Film getFilm(Long id) {
         filmExists(id);
-        Film film = filmStorage.getFilm(id);
-        film.setGenres(filmStorage.getGenres(id).stream().map(genreDbStorage::getGenre).collect(Collectors.toSet()));
-        return film;
+        return filmStorage.getFilm(id);
     }
 
     public Film addLike(Long filmId, Long userId) {
