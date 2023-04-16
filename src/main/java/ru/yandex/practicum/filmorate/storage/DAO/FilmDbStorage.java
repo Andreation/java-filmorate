@@ -42,7 +42,6 @@ public class FilmDbStorage implements FilmStorage {
                 "INNER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id " +
                 "WHERE films.film_id = ? ";
         Film film = jdbcTemplate.queryForObject(sqlQuery, (rs, rowNum) -> makeFilm(rs), id);
-        film.setLikes(new HashSet<>(getLikes(id)));
         return film;
     }
 
@@ -162,11 +161,10 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     private Set<Genre> makeGenreList(Long filmId) {
-        Set<Genre> genres = new HashSet<>();
+        Set<Genre> genres = new LinkedHashSet<>();
         for (Integer id : getGenres(filmId)) {
             genres.add(genreDbStorage.getGenre(id));
         }
-        genres.stream().sorted(Comparator.comparing(Genre::getId));
         return genres;
     }
 
