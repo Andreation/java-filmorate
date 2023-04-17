@@ -68,7 +68,7 @@ public class FilmDbStorageTest {
     }
 
     @Test
-    public void SaveFilmTest() {
+    public void saveFilmTest() {
         Film film = film1;
         filmStorage.save(film1);
 
@@ -95,7 +95,7 @@ public class FilmDbStorageTest {
     }
 
     @Test
-    public void UpdateFilmTest() {
+    public void updateFilmTest() {
         filmStorage.save(film1);
         film1.setName("updateName");
         film1.setDescription("updateDescription");

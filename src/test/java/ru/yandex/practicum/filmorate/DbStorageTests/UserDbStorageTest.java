@@ -51,7 +51,7 @@ public class UserDbStorageTest {
     }
 
     @Test
-    public void SaveUserTest() {
+    public void saveUserTest() {
         User user = user1;
         userStorage.save(user1);
 
@@ -77,7 +77,7 @@ public class UserDbStorageTest {
     }
 
     @Test
-    public void UpdateUserTest() {
+    public void updateUserTest() {
         userStorage.save(user1);
         user1.setName("updateName");
         user1.setLogin("updateLogin");
