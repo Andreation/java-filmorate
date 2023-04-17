@@ -13,13 +13,14 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Getter
 @Setter
 @Builder(toBuilder = true)
 public class Film {
     Long id;
 
-    @NotNull @NotBlank
+    @NotBlank
     String name;
 
     @Size(max = 200)

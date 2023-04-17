@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
 import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
@@ -68,7 +69,7 @@ public class UserService {
     public void userExists(Long userId) {
         try {
             userStorage.getUser(userId);
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new UserNotFoundException("user no found");
         }
     }

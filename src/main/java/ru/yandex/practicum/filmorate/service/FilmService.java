@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
@@ -67,7 +68,7 @@ public class FilmService {
     public void userExists(Long userId) {
         try {
             userStorage.getUser(userId);
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new UserNotFoundException("user no found");
         }
     }
@@ -75,7 +76,7 @@ public class FilmService {
     public void filmExists(Long filmId) {
         try {
             filmStorage.getFilm(filmId);
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new FilmNotFoundException("film no found");
         }
     }

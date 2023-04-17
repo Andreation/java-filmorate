@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.GenreNotFoundException;
 import ru.yandex.practicum.filmorate.model.Genre;
@@ -22,7 +23,7 @@ public class GenreService {
     public Genre getGenreById(Integer id) {
         try {
             return genreDbStorage.getGenre(id);
-        } catch (Exception e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new GenreNotFoundException("genre not found");
         }
     }
