@@ -31,7 +31,7 @@ public class FilmDbStorage implements FilmStorage {
     public Collection<Film> getFilms() {
         String sqlQuery = "SELECT * " +
                 "FROM films " +
-                "INNER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id ";
+                "LEFT OUTER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id ";
         return jdbcTemplate.query(sqlQuery, (rs, rowNum) -> makeFilm(rs));
     }
 
@@ -39,7 +39,7 @@ public class FilmDbStorage implements FilmStorage {
     public Film getFilm(Long id) {
         String sqlQuery = "SELECT * " +
                 "FROM films " +
-                "INNER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id " +
+                "LEFT OUTER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id " +
                 "WHERE films.film_id = ? ";
         Film film = jdbcTemplate.queryForObject(sqlQuery, (rs, rowNum) -> makeFilm(rs), id);
         return film;
@@ -131,7 +131,7 @@ public class FilmDbStorage implements FilmStorage {
                 "    LEFT JOIN (SELECT film_id, count(film_like.film_id) AS count " +
                 "      FROM film_like "  +
                 "      GROUP BY film_like.film_id) AS top ON top.film_id = films.film_id " +
-                "         INNER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id " +
+                "         LEFT OUTER JOIN mpa_rating ON films.mpa_rating_id = mpa_rating.mpa_rating_id " +
                 "ORDER BY count DESC " +
                 "LIMIT ?;",
                 (rs, rowNum) -> makeFilm(rs), count);
