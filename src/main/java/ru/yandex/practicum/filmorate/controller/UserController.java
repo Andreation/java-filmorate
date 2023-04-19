@@ -1,17 +1,15 @@
-package ru.yandex.practicum.filmorate.controllers;
+package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Collection;
 
 @Slf4j
-@Component
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -22,15 +20,13 @@ public class UserController {
         this.userService = userService;
     }
 
-
-
     @GetMapping("/{id}/friends")
-    public ArrayList<User> getFriendsList(@PathVariable int id) {
+    public Collection<User> getFriendsList(@PathVariable int id) {
         return userService.getFriendsList(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
-    public ArrayList<User> getMutualFriendsList(@PathVariable int id, @PathVariable int otherId) {
+    public Collection<User> getMutualFriendsList(@PathVariable int id, @PathVariable int otherId) {
         return userService.getMutualFriendsList(id, otherId);
     }
 
@@ -40,20 +36,18 @@ public class UserController {
     }
 
     @GetMapping()
-    public ArrayList<User> getUsers() {
+    public Collection<User> getUsers() {
         return userService.getUsers();
     }
 
     @PostMapping()
     public User post(@RequestBody @Valid User user) {
-        userService.save(user);
-        return user;
+        return userService.save(user);
     }
 
     @PutMapping()
     public User put(@RequestBody @Valid User user) {
-        userService.update(user);
-        return user;
+        return  userService.update(user);
     }
 
     @PutMapping("/{id}/friends/{friendId}")

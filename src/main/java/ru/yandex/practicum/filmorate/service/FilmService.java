@@ -2,70 +2,81 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exceptions.*;
+import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storages.FilmStorage;
-import ru.yandex.practicum.filmorate.storages.UserStorage;
+import ru.yandex.practicum.filmorate.storage.DAO.GenreDbStorage;
+import ru.yandex.practicum.filmorate.storage.interfaces.FilmStorage;
+import ru.yandex.practicum.filmorate.storage.interfaces.UserStorage;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 @Slf4j
 public class FilmService {
     private final FilmStorage filmStorage;
     private final UserStorage userStorage;
+    private final GenreDbStorage genreDbStorage;
 
     @Autowired
-    public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
+    public FilmService(FilmStorage filmStorage, UserStorage userStorage, GenreDbStorage genreDbStorage) {
         this.filmStorage = filmStorage;
         this.userStorage = userStorage;
+        this.genreDbStorage = genreDbStorage;
     }
 
     public Film saveFilm(Film film) {
-        return filmStorage.save(film);
+        filmStorage.save(film);
+        return getFilm(film.getId());
     }
 
     public Film updateFilm(Film film) {
-        return filmStorage.update(film);
+        filmExists(film.getId());
+        filmStorage.update(film);
+        return getFilm(film.getId());
     }
 
-    public Film deleteFilm(int id) {
-        return filmStorage.deleteFilm(id);
-    }
-
-    public ArrayList<Film> getFilms() {
+    public Collection<Film> getFilms() {
         return filmStorage.getFilms();
     }
 
-    public Film getFilm(int id) {
+    public Film getFilm(Long id) {
+        filmExists(id);
         return filmStorage.getFilm(id);
     }
 
-    public Film addLike(int filmId, int userId) {
+    public Film addLike(Long filmId, Long userId) {
         filmExists(filmId);
         userExists(userId);
-        return filmStorage.likeFilm(filmId, userId);
+        filmStorage.likeFilm(filmId, userId);
+        return getFilm(filmId);
     }
 
-    public Film deleteLike(int filmId, int userId) {
+    public Film deleteLike(Long filmId, Long userId) {
         filmExists(filmId);
         userExists(userId);
-        return filmStorage.deleteLike(filmId, userId);
+        filmStorage.deleteLike(filmId, userId);
+        return getFilm(filmId);
     }
 
-    public ArrayList<Film> getTopFilms(int count) {
+    public Collection<Film> getTopFilms(int count) {
         return filmStorage.getTopFilms(count);
     }
 
-    public void userExists(int userId) {
-        if (userStorage.getUser(userId) == null) {
+    public void userExists(Long userId) {
+        try {
+            userStorage.getUser(userId);
+        } catch (EmptyResultDataAccessException e) {
             throw new UserNotFoundException("user no found");
         }
     }
 
-    public void filmExists(int filmId) {
-        if (filmStorage.getFilm(filmId) == null) {
+    public void filmExists(Long filmId) {
+        try {
+            filmStorage.getFilm(filmId);
+        } catch (EmptyResultDataAccessException e) {
             throw new FilmNotFoundException("film no found");
         }
     }

@@ -4,31 +4,29 @@ import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Getter
 @Setter
-@NoArgsConstructor
-
+@Builder(toBuilder = true)
 public class User {
     Long id;
+
+    @NotBlank
     @Email
     String email;
+
     @NotBlank
     String login;
-    String name;
-    @Past
-    LocalDate birthday;
-    Set<Long> friendsList = new HashSet<>();
 
-    public User(Long id, String email, String login, String name, LocalDate birthday) {
-        this.id = id;
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
-    }
+    String name;
+
+    @NotNull
+    @PastOrPresent
+    LocalDate birthday;
 }

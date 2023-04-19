@@ -2,12 +2,14 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.IdException;
+import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storages.UserStorage;
+import ru.yandex.practicum.filmorate.storage.interfaces.UserStorage;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 @Slf4j
@@ -25,32 +27,51 @@ public class UserService {
     }
 
     public User update(User user) {
-        return userStorage.update(user);
+        userExists(user.getId());
+        userStorage.update(user);
+        return getUser(user.getId());
     }
 
-    public ArrayList<User> getUsers() {
+    public Collection<User> getUsers() {
         return userStorage.getUsers();
     }
 
     public User addFriend(long id, long friendId) {
-
-        return userStorage.addFriend(id, friendId);
+        userExists(id);
+        userExists(friendId);
+        userStorage.addFriend(id, friendId);
+        return getUser(id);
     }
 
     public User deleteFriend(long id, long friendId) {
-        return userStorage.deleteFriend(id, friendId);
+        userExists(id);
+        userExists(friendId);
+        userStorage.deleteFriend(id, friendId);
+        return getUser(id);
     }
 
-    public ArrayList<User> getMutualFriendsList(long id, long otherId) {
+    public Collection<User> getMutualFriendsList(long id, long otherId) {
+        userExists(id);
+        userExists(otherId);
         return userStorage.getMutualFriendsList(id, otherId);
     }
 
-    public ArrayList<User> getFriendsList(long id) {
+    public Collection<User> getFriendsList(long id) {
+        userExists(id);
         return userStorage.getFriendsList(id);
     }
 
     public User getUser(long id) {
+        userExists(id);
         return userStorage.getUser(id);
+    }
+
+    public void userExists(Long userId) {
+        try {
+            userStorage.getUser(userId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserNotFoundException("user no found");
+        }
     }
 
 }
