@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Builder(toBuilder = true)
 public class User {
     Long id;
-
     @NotBlank
     @Email
     String email;
