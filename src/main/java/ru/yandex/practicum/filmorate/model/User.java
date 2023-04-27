@@ -18,6 +18,7 @@ public class User {
     Long id;
 
 
+
     @NotBlank
     @Email
     String email;
