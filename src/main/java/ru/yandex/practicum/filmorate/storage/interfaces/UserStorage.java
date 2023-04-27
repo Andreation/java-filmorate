@@ -23,4 +23,7 @@ public interface UserStorage {
 
     User deleteFriend(Long userId, Long friendId);
 
+    void deleteUser(long userId);
+
+    void getRecommendations(int id);
 }
