@@ -19,7 +19,11 @@ public interface FilmStorage {
 
     Collection<Film> getTopFilms(Integer count);
 
+    Collection<Film> getRecommendations(int id);
+
     Collection<Integer> getGenres(Long id);
 
     Collection<Long> getLikes(Long id);
+
+    void deleteFilm(long filmId);
 }
